@@ -1,7 +1,4 @@
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, Encoding, PublicFormat
-import ssl
-import socket
-from ssl import SSLContext
 import hashlib
 import base64
 from cryptography import x509
@@ -9,10 +6,16 @@ from cryptography.hazmat.backends import default_backend
 
 
 def generate_hpkp_from_pem_certificate(pem_cert: str) -> str:
+    # Take the certificate and convert it to a X.509 certificate
     cert = x509.load_pem_x509_certificate(pem_cert.encode("utf-8"), default_backend())
-    encryption = cert.signature_hash_algorithm.name  # e.g. SHA-1, SHA-256
+
+    # Get the pin type (e.g. SHA-1, SHA-256)
+    encryption = cert.signature_hash_algorithm.name
+
+    # Retrieve the SPKI Fingerprint i.e. get the DER-encoded ASN.1 representation of the Subject Public Key Info (SPKI)
     cert_subject_public_key_info = cert.public_key().public_bytes(Encoding.DER, PublicFormat.SubjectPublicKeyInfo)
 
+    # Hash the representation using a cryptographic hash (in this case SHA-1 or SHA-256)
     encryption_formatted = encryption.replace("-", "").lower()
     if encryption_formatted == "sha256":
         m = hashlib.sha256()
@@ -23,9 +26,10 @@ def generate_hpkp_from_pem_certificate(pem_cert: str) -> str:
     else:
         raise Exception("Invalid path")
 
+    # Base64-encode the SPKI Fingerprint
     if prefix and m:
         m.update(cert_subject_public_key_info)
-        digest = m.digest()
+        digest = m.digest()  # SPKI Fingerprint
         digest_base64 = base64.b64encode(digest)
         digest_str = digest_base64.decode("utf-8")
 
