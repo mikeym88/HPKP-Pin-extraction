@@ -1,13 +1,7 @@
-# HTTP Public Key Pinning - SPKI Fingerprint Generation using Python
+# HTTP Public Key Pinning (HPKP) - SPKI Fingerprint Generation using Python
 
 This is an implementation of converting the a PEM certificate's Subject Public Key Info (SPKI) into a 
-pin. 
-
-**NOTE**: There are warnings against using public key pinning due to its risks:
-
-* Ars Technica article: [*How to hurricane-proof a Web server* ](https://arstechnica.com/information-technology/2017/09/how-to-hurricane-proof-a-web-server/)
-* SCOTT HELME: [*I'm giving up on HPKP*](https://scotthelme.co.uk/im-giving-up-on-hpkp/)
-* Smashing Magazine: [*Be Afraid Of HTTP Public Key Pinning (HPKP)*](https://www.smashingmagazine.com/be-afraid-of-public-key-pinning/)
+pin.
 
 ## Information on the structure
 
@@ -36,6 +30,15 @@ A pin is defined as:
 * To change the implementation to use M2Crypto and be able to install/run it on Windows, see:
     * https://stackoverflow.com/a/54046778/6288413
     * https://stackoverflow.com/a/25128855/6288413
+
+### Risks
+
+**NOTE**: There are warnings against using public key pinning due to its risks:
+
+* Ars Technica article: [*How to hurricane-proof a Web server* ](https://arstechnica.com/information-technology/2017/09/how-to-hurricane-proof-a-web-server/)
+* SCOTT HELME: [*I'm giving up on HPKP*](https://scotthelme.co.uk/im-giving-up-on-hpkp/)
+* Smashing Magazine: [*Be Afraid Of HTTP Public Key Pinning (HPKP)*](https://www.smashingmagazine.com/be-afraid-of-public-key-pinning/)
+* [*Is HTTP Public Key Pinning Dead?*](https://blog.qualys.com/ssllabs/2016/09/06/is-http-public-key-pinning-dead)
 
 ## Resources
 
